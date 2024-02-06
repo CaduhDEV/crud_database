@@ -8,14 +8,13 @@ const port = 8000;
 const sql = new SqlModules();
 
 app.use(cors());
-
 app.use(express.json());
 
 app.get('/api/users', async (req, res) => {
   try {
     const users = await sql.getUsers();
     res.json(users);
-  } catch (error) {''
+  } catch (error) {
     res.status(500).json({ error: 'Erro ao obter usuário.' });
   }
 });
@@ -47,7 +46,6 @@ app.post('/api/endpoint', async (req, res) => {
 app.post('/api/update', async (req, res) => {
 try {
     const data = req.body;
-    console.log(data)
     await sql.updateUser(data);
 
     res.status(200).json({ message: 'Dados inseridos com sucesso.' });
@@ -57,6 +55,19 @@ try {
 }
 });
 
+app.post('/api/delete', async (req, res) => {
+    try {
+        const data = req.body;
+        await sql.deleteUser(data.id);
+    
+        res.status(200).json({ message: 'Usuário deletado com sucesso.' });
+    } catch (error) {
+        console.error('Erro ao inserir dados:', error);
+        res.status(500).json({ error: 'Ocorreu um erro ao inserir os dados.' });
+    }
+    });
+
+    
 app.listen(port, () => {
   console.log(`Servidor está rodando na porta ${port}`);
 });

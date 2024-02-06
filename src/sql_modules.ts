@@ -78,7 +78,6 @@ export class SqlModules {
         return null;
       }
       
-      console.log(rows);
       return rows;
     } catch (error) {
       console.error('Erro ao obter usuários:', error);

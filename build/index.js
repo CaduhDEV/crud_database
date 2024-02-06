@@ -26,7 +26,6 @@ app.get('/api/users', (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.json(users);
     }
     catch (error) {
-        '';
         res.status(500).json({ error: 'Erro ao obter usuário.' });
     }
 }));
@@ -54,9 +53,19 @@ app.post('/api/endpoint', (req, res) => __awaiter(void 0, void 0, void 0, functi
 app.post('/api/update', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const data = req.body;
-        console.log(data);
         yield sql.updateUser(data);
         res.status(200).json({ message: 'Dados inseridos com sucesso.' });
+    }
+    catch (error) {
+        console.error('Erro ao inserir dados:', error);
+        res.status(500).json({ error: 'Ocorreu um erro ao inserir os dados.' });
+    }
+}));
+app.post('/api/delete', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const data = req.body;
+        yield sql.deleteUser(data.id);
+        res.status(200).json({ message: 'Usuário deletado com sucesso.' });
     }
     catch (error) {
         console.error('Erro ao inserir dados:', error);

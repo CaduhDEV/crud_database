@@ -80,7 +80,6 @@ class SqlModules {
                 if (rows.length === 0) {
                     return null;
                 }
-                console.log(rows);
                 return rows;
             }
             catch (error) {
