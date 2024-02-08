@@ -20,7 +20,7 @@ const port = 8000;
 const sql = new sql_modules_1.SqlModules();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
-app.get('/api/users', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.get('/api/search', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const users = yield sql.getUsers();
         res.json(users);
@@ -29,11 +29,12 @@ app.get('/api/users', (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.status(500).json({ error: 'Erro ao obter usuário.' });
     }
 }));
-app.get('/api/users/search', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { name, startDate, endDate } = req.query;
+app.get('/api/search/:name', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const users = yield sql.getUsers(name, startDate, endDate);
+        console.log(req.params);
+        const users = yield sql.getUsers(req.params.name);
         res.json(users);
+        console.log(users);
     }
     catch (error) {
         res.status(500).json({ error: 'Usuários não encontrados2.' });

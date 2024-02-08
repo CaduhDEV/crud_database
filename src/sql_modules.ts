@@ -57,8 +57,8 @@ export class SqlModules {
     const queryParams = [];
 
     if (name) {
-      query += ' AND name = ?';
-      queryParams.push(name);
+      query += " AND name LIKE ?";
+      queryParams.push(`${name}%`);
     }
 
     if (startDate) {
@@ -72,13 +72,15 @@ export class SqlModules {
     }
   
     try {
+      console.log(query)
       const [rows, fields] = await this.execute(query, queryParams);
   
       if (rows.length === 0) {
         return null;
       }
-      
+      console.log(rows)
       return rows;
+      
     } catch (error) {
       console.error('Erro ao obter usuários:', error);
       throw error;

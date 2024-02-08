@@ -62,8 +62,8 @@ class SqlModules {
             let query = 'SELECT * FROM crud WHERE deleted_at IS NULL';
             const queryParams = [];
             if (name) {
-                query += ' AND name = ?';
-                queryParams.push(name);
+                query += " AND name LIKE ?";
+                queryParams.push(`${name}%`);
             }
             if (startDate) {
                 if (endDate) {
@@ -76,10 +76,12 @@ class SqlModules {
                 }
             }
             try {
+                console.log(query);
                 const [rows, fields] = yield this.execute(query, queryParams);
                 if (rows.length === 0) {
                     return null;
                 }
+                console.log(rows);
                 return rows;
             }
             catch (error) {

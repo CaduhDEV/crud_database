@@ -10,7 +10,7 @@ const sql = new SqlModules();
 app.use(cors());
 app.use(express.json());
 
-app.get('/api/users', async (req, res) => {
+app.get('/api/search', async (req, res) => {
   try {
     const users = await sql.getUsers();
     res.json(users);
@@ -19,11 +19,13 @@ app.get('/api/users', async (req, res) => {
   }
 });
 
-app.get('/api/users/search', async (req: any, res: any) => {
-  const { name, startDate, endDate } = req.query;
+app.get('/api/search/:name', async (req: any, res: any) => {
   try {
-    const users = await sql.getUsers(name, startDate, endDate);
+    console.log(req.params)
+    const users = await sql.getUsers(req.params.name); 
     res.json(users);
+    console.log(users);
+    
   } catch (error) {
     res.status(500).json({ error: 'Usuários não encontrados2.' });
   }
@@ -65,9 +67,9 @@ app.post('/api/delete', async (req, res) => {
         console.error('Erro ao inserir dados:', error);
         res.status(500).json({ error: 'Ocorreu um erro ao inserir os dados.' });
     }
-    });
+});
 
-    
+
 app.listen(port, () => {
   console.log(`Servidor está rodando na porta ${port}`);
 });
