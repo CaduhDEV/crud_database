@@ -1,7 +1,6 @@
 import express from 'express';
 import { SqlModules } from './sql_modules';
 import cors from 'cors';
-import moment from 'moment';
 
 const app = express();
 const port = 8000;
