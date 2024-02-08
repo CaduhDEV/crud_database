@@ -64,9 +64,11 @@ export class SqlModules {
     if (startDate) {
       if (endDate) {
         query += ' AND DATE(created_at) BETWEEN ? AND ?';
+        console.log(startDate, endDate);
         queryParams.push(startDate, endDate);
       } else {
         query += ' AND DATE(created_at) = ?';
+        console.log(startDate)
         queryParams.push(startDate);
       }
     }

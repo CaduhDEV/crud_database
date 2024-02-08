@@ -29,25 +29,15 @@ app.get('/api/search', (req, res) => __awaiter(void 0, void 0, void 0, function*
         res.status(500).json({ error: 'Erro ao obter usuário.' });
     }
 }));
-app.get('/api/search/:name', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.get('/api/search/:filters', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        //console.log(req.params);
-        const users = yield sql.getUsers(req.params.name);
+        const data = req.params.filters.split('+');
+        const users = yield sql.getUsers(data[0], data[1], data[2]);
         res.json(users);
-        //console.log(users);
     }
     catch (error) {
         res.status(500).json({ error: 'Usuários não encontrados.' });
     }
-}));
-app.get('/api/search/:name/:date', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const date = req.params.date.split('+');
-    const name = req.params.name;
-    ;
-    console.log('DATE:', date);
-    const result = yield sql.getUsers((name || undefined), (date[0] || undefined), (date[1] || undefined));
-    res.json(result);
-    return;
 }));
 app.post('/api/endpoint', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {

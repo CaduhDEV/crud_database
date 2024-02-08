@@ -1,6 +1,7 @@
 import express from 'express';
 import { SqlModules } from './sql_modules';
 import cors from 'cors';
+import moment from 'moment';
 
 const app = express();
 const port = 8000;
@@ -19,31 +20,16 @@ app.get('/api/search', async (req, res) => {
   }
 });
 
-// app.get('/api/search/:name', async (req: any, res: any) => {
-//   try {
-//     //console.log(req.params);
-//     const users = await sql.getUsers(req.params.name);
-//     res.json(users);
-//     //console.log(users);
-
-//   } catch (error) {
-//     res.status(500).json({ error: 'Usuários não encontrados.' });
-//   }
-// });
-
-app.get('/api/search/:name?/:date', async (req, res) => {
+app.get('/api/search/:filters', async (req: any, res: any) => {
   try {
-    const { name, date } = req.params;
-    const c_date = date?.split('+');
+    const data = req.params.filters.split('+');
 
-    const filteredUsers = await sql.getUsers(name, c_date[0], c_date[1]);
-    console.log(filteredUsers)
-    res.json(filteredUsers);
+    const users = await sql.getUsers(data[0], data[1], data[2]);
+    res.json(users);
   } catch (error) {
-    res.status(500).json({ error: 'Erro ao obter usuário.' });
+    res.status(500).json({ error: 'Usuários não encontrados.' });
   }
 });
-
 
 app.post('/api/endpoint', async (req, res) => {
   try {
