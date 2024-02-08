@@ -25,9 +25,7 @@ Este projeto consiste em um CRUD (Create, Read, Update, Delete) básico para man
    npm install
    ```
 
-3. Configure as variáveis de ambiente. Renomeie o arquivo `.env.example` para `.env` e ajuste as variáveis de acordo com o seu ambiente.
-
-4. Inicie o servidor:
+3. Inicie o servidor:
    ```
    npm start
    ```
